@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CareMobileApp.Views.LoginPage"
+             xmlns:circleImageControl="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+             NavigationPage.HasNavigationBar="False">
+
+<Grid x:Name="LoginContainer" VerticalOptions="Center" Padding="20,10,20,10" ColumnSpacing="0" RowSpacing="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0">
+            <circleImageControl:CircleImage Source="lcw_logo_square.png" Aspect="AspectFill" BorderThickness="1" HorizontalOptions="Center" VerticalOptions="Center" BorderColor="Navy" MinimumHeightRequest="160" MinimumWidthRequest="160" WidthRequest="320" HeightRequest="320">
+            </circleImageControl:CircleImage>
+        </StackLayout>
+
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="1" Grid.Column="0" MinimumWidthRequest="160" WidthRequest="320">
+            <Label x:Name="UserNameLabel" Text="User Name">
+                <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                <Label.TextColor>Navy</Label.TextColor>
+            </Label>
+            <Entry x:Name="UserNameEntry">
+                <Entry.TextColor>Navy</Entry.TextColor>
+            </Entry>
+        </StackLayout>
+
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="2" Grid.Column="0" MinimumWidthRequest="160" WidthRequest="320">
+            <Label x:Name="UserPasswordLabel" Text="Password">
+                <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                <Label.TextColor>Navy</Label.TextColor>
+            </Label>
+            <Entry x:Name="UserPasswordEntry" IsPassword="True">
+                <Entry.TextColor>Navy</Entry.TextColor>
+            </Entry>
+        </StackLayout>
+
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="3" Grid.Column="0" MinimumWidthRequest="160" WidthRequest="320">
+            <Button x:Name="LoginButton" StyleClass="Primary" Text="Log In"></Button>
+        </StackLayout>
+ </Grid>
+
+
+</ContentPage>

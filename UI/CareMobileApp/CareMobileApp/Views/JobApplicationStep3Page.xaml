@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CareMobileApp.Views.JobApplicationStep3Page"
+             Title="Job Application Wizard"
+             NavigationPage.HasBackButton="False">
+
+    <StackLayout Padding="10,10,10,10" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+
+        <Label Text="Application Step - III" FontSize="Large" TextColor="Navy" HorizontalOptions="Center"></Label>
+
+        <Grid x:Name="Container" VerticalOptions="Center" Padding="0,0,0,0" ColumnSpacing="0" RowSpacing="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!-- Profile Image -->
+            <Image x:Name="ProfilePhoto" MinimumHeightRequest="240" MinimumWidthRequest="240" WidthRequest="320" HeightRequest="320" Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"></Image>
+
+            <!-- Full Name -->
+            <Label Text="Full Name" Grid.Row="1" Grid.Column="0">
+                <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                <Label.TextColor>Navy</Label.TextColor>
+            </Label>
+            <Label x:Name="FullNameLabel" Grid.Row="1" Grid.Column="1">
+                <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                <Label.TextColor>Navy</Label.TextColor>
+                <Label.Text>Sample Text</Label.Text>
+            </Label>
+
+            <!-- Email Address -->
+            <Label Text="Email" Grid.Row="2" Grid.Column="0">
+                <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                <Label.TextColor>Navy</Label.TextColor>
+            </Label>
+            <Label x:Name="EmailLabel" Grid.Row="2" Grid.Column="1">
+                <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                <Label.TextColor>Navy</Label.TextColor>
+                <Label.Text>Sample Text</Label.Text>
+            </Label>
+
+            <!-- BirthDate -->
+            <Label Text="BirthDate" Grid.Row="3" Grid.Column="0">
+                <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                <Label.TextColor>Navy</Label.TextColor>
+            </Label>
+            <Label x:Name="BirthDateLabel" Grid.Row="3" Grid.Column="1">
+                <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                <Label.TextColor>Navy</Label.TextColor>
+                <Label.Text>Sample Text</Label.Text>
+            </Label>
+
+            <!-- Position -->
+            <Label Text="Position" Grid.Row="4" Grid.Column="0">
+                <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                <Label.TextColor>Navy</Label.TextColor>
+            </Label>
+            <Label x:Name="PositionLabel" Grid.Row="4" Grid.Column="1">
+                <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                <Label.TextColor>Navy</Label.TextColor>
+                <Label.Text>Sample Text</Label.Text>
+            </Label>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                <Button HorizontalOptions="FillAndExpand" x:Name="PreviousStepButton" StyleClass="Default" Text="Prev Step"></Button>
+                <Button HorizontalOptions="FillAndExpand" x:Name="FinishJobApplicationButton" StyleClass="Success" Text="Save Application"></Button>
+            </StackLayout>
+
+        </Grid>
+
+
+
+    </StackLayout>
+
+</ContentPage>

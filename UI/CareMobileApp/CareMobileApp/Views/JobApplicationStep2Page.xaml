@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CareMobileApp.Views.JobApplicationStep2Page"
+             Title="Job Application Wizard"
+             NavigationPage.HasBackButton="False">
+
+    <StackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+
+        <Label Text="Application Step - II" FontSize="Large" TextColor="Navy" HorizontalOptions="Center"></Label>
+
+        <Grid x:Name="Container" VerticalOptions="Center" Padding="10,10,10,10" ColumnSpacing="0" RowSpacing="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0" MinimumWidthRequest="160" WidthRequest="320">
+                <Label Text="Full Name">
+                    <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                    <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                    <Label.TextColor>Navy</Label.TextColor>
+                </Label>
+                <Entry x:Name="FullNameEntry">
+                    <Entry.TextColor>Navy</Entry.TextColor>
+                </Entry>
+            </StackLayout>
+
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="1" Grid.Column="0" MinimumWidthRequest="160" WidthRequest="320">
+                <Label Text="Email">
+                    <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                    <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                    <Label.TextColor>Navy</Label.TextColor>
+                </Label>
+                <Entry x:Name="EmailEntry">
+                    <Entry.TextColor>Navy</Entry.TextColor>
+                    <Entry.Text>example@caremobile.com</Entry.Text>
+                </Entry>
+            </StackLayout>
+
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="2" Grid.Column="0" MinimumWidthRequest="160" WidthRequest="320">
+                <Label Text="Birthday">
+                    <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                    <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                    <Label.TextColor>Navy</Label.TextColor>
+                </Label>
+                <DatePicker x:Name="BirthDatePicker">
+                    <DatePicker.Format>dd.MM.yyyy</DatePicker.Format>
+                </DatePicker>
+            </StackLayout>
+
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="3" Grid.Column="0" MinimumWidthRequest="160" WidthRequest="320">
+                <Label Text="Position">
+                    <Label.HorizontalTextAlignment>Start</Label.HorizontalTextAlignment>
+                    <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
+                    <Label.TextColor>Navy</Label.TextColor>
+                </Label>
+                <Picker Title="Select a Position" x:Name="PositionPicker">
+                    <Picker.Items>
+                        <x:String>Position 1</x:String>
+                        <x:String>Position 2</x:String>
+                        <x:String>Position 3</x:String>
+                        <x:String>Position 4</x:String>
+                        <x:String>Position 5</x:String>
+                    </Picker.Items>
+                </Picker>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="4" Grid.Column="0" MinimumWidthRequest="160" WidthRequest="320">
+                <Button HorizontalOptions="FillAndExpand" x:Name="PreviousStepButton" StyleClass="Default" Text="Prev Step"></Button>
+                <Button HorizontalOptions="FillAndExpand" x:Name="NextStepButton" StyleClass="Primary" Text="Next Step"></Button>
+            </StackLayout>
+        </Grid>
+
+    </StackLayout>
+
+</ContentPage>
