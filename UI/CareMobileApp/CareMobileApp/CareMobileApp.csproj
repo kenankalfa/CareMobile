@@ -52,6 +52,11 @@
     </Compile>
     <Compile Include="MasterPageViews\MasterPageItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\Applicant.cs" />
+    <Compile Include="Utils\JobApplication.cs" />
+    <Compile Include="Utils\Photo.cs" />
+    <Compile Include="Utils\Position.cs" />
+    <Compile Include="Utils\ServiceResult.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Views\JobApplicationStep1Page.xaml.cs">
       <DependentUpon>JobApplicationStep1Page.xaml</DependentUpon>

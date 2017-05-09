@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DocumentDBRepository.cs" />
+    <Compile Include="EmotionApiRepository.cs" />
+    <Compile Include="IEmotionApiRepository.cs" />
     <Compile Include="IJobApplicationRepository.cs" />
     <Compile Include="IPositionRepository.cs" />
     <Compile Include="JobApplicationRepository.cs" />

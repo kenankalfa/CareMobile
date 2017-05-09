@@ -34,6 +34,21 @@ namespace CareMobile.Azure.Storage
             blockBlob.Delete(DeleteSnapshotsOption.IncludeSnapshots);
         }
 
+        public byte[] GetByteArray(string fileName)
+        {
+            Initialize();
+
+            var blockBlob = directory.GetBlockBlobReference(fileName);
+            var ms = new MemoryStream();
+            
+            blockBlob.DownloadToStream(ms);
+
+            var returnValue = ms.ToArray();
+            ms.Close();
+
+            return returnValue;
+        }
+
         public string UploadFile(string fileName, Stream stream)
         {
             Initialize();

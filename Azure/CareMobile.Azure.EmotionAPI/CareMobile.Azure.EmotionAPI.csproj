@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E63EA8DA-1FF9-4E99-A683-A50737891522}</ProjectGuid>
+    <ProjectGuid>{8BF0DBB6-A35B-4270-894A-2E3A6A05BCB6}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CareMobile.API.Common</RootNamespace>
-    <AssemblyName>CareMobile.API.Common</AssemblyName>
+    <RootNamespace>CareMobile.Azure.EmotionAPI</RootNamespace>
+    <AssemblyName>CareMobile.Azure.EmotionAPI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,12 +23,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -43,16 +48,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Applicant.cs" />
-    <Compile Include="EmotionApiEntities.cs" />
-    <Compile Include="JobApplication.cs" />
-    <Compile Include="Photo.cs" />
-    <Compile Include="Position.cs" />
+    <Compile Include="EmotionRepository.cs" />
+    <Compile Include="IEmotionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceResult.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\CareMobile.API.Common\CareMobile.API.Common.csproj">
+      <Project>{e63ea8da-1ff9-4e99-a683-a50737891522}</Project>
+      <Name>CareMobile.API.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\CareMobile.API.Configuration\CareMobile.API.Configuration.csproj">
+      <Project>{35f08c5f-e146-48f8-8536-a36fd08655f3}</Project>
+      <Name>CareMobile.API.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CareMobile.Azure.Storage\CareMobile.Azure.Storage.csproj">
+      <Project>{2315b808-5515-4540-b44c-ad53184bff9e}</Project>
+      <Name>CareMobile.Azure.Storage</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -44,6 +44,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Owin.4.0.0\lib\net45\Autofac.Integration.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.WebApi2.4.0.1\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
@@ -183,9 +192,10 @@
     <Compile Include="App_Start\Startup.MobileApp.cs" />
     <Compile Include="Controllers\JobApplicationController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\AutofacBootsrapper.cs" />
+    <Compile Include="Utils\ConfigurationSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
@@ -208,6 +218,10 @@
     <ProjectReference Include="..\..\Azure\CareMobile.Azure.DocumentDB\CareMobile.Azure.DocumentDB.csproj">
       <Project>{a937de24-cde1-4726-b04a-274638b2e83a}</Project>
       <Name>CareMobile.Azure.DocumentDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Azure\CareMobile.Azure.EmotionAPI\CareMobile.Azure.EmotionAPI.csproj">
+      <Project>{8bf0dbb6-a35b-4270-894a-2e3a6a05bcb6}</Project>
+      <Name>CareMobile.Azure.EmotionAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Azure\CareMobile.Azure.Storage\CareMobile.Azure.Storage.csproj">
       <Project>{2315b808-5515-4540-b44c-ad53184bff9e}</Project>

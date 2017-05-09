@@ -11,5 +11,6 @@ namespace CareMobile.Azure.Storage
     {
         string UploadFile(string fileName, Stream stream);
         void DeleteFile(string fileName);
+        byte[] GetByteArray(string fileName);
     }
 }
