@@ -14,11 +14,12 @@ namespace CareMobileApp.Utils
         public string FullName => $"{FirstName} {LastName}";
     }
 
-    public static class DataService
+    // for testing purposes
+    public static class SampleDataService
     {
         private static List<SamplePersonType> _persons;
 
-        static DataService()
+        static SampleDataService()
         {
             _persons = new List<SamplePersonType>();
 
@@ -27,7 +28,7 @@ namespace CareMobileApp.Utils
             _persons.Add(new SamplePersonType() { FirstName = "Jan", LastName = "Van de Poel", Profession = "Entrepreneur" });
         }
 
-        public static List<SamplePersonType> GetPersons()
+        public static List<SamplePersonType> GetPersonForManagerView()
         {
             return _persons;
         }
@@ -126,6 +127,14 @@ namespace CareMobileApp.Utils
             Instance.SelectedPosition = formData.SelectedPosition;
 
             NavigationMessage.PutData<JobApplicationPagesData>(Const.JobApplicationPagesData, Instance);
+        }
+    }
+
+    public static class HttpServices
+    {
+        public static class PositionService
+        {
+           
         }
     }
 }

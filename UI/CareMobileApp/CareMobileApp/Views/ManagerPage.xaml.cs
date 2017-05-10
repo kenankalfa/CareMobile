@@ -28,7 +28,7 @@ namespace CareMobileApp.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            Persons = new ObservableCollection<SamplePersonType>(DataService.GetPersons());
+            Persons = new ObservableCollection<SamplePersonType>(SampleDataService.GetPersonForManagerView());
         }
     }
 }

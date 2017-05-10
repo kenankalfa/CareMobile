@@ -22,7 +22,7 @@ namespace CareMobileApp.Views
         {
             var userName = UserNameEntry.Text;
             var password = UserPasswordEntry.Text;
-
+            // for testing purposes
             if (userName == "a" && password == "s")
             {
                 var masterDetailMainPage = new MasterPageViews.MasterMainPage();

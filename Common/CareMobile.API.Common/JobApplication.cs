@@ -7,7 +7,6 @@ namespace CareMobile.API.Common
 {
     public class JobApplication
     {
-        [JsonProperty(PropertyName = "id")]
         public string JobApplicationRef { get; set; }
         public Position Position { get; set; }
         public Applicant Applicant { get; set; }

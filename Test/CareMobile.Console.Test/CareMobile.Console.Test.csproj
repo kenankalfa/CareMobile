@@ -32,7 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Faker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Faker.1.2\lib\Faker.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,6 +54,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure\CareMobile.Azure.DocumentDB\CareMobile.Azure.DocumentDB.csproj">
+      <Project>{a937de24-cde1-4726-b04a-274638b2e83a}</Project>
+      <Name>CareMobile.Azure.DocumentDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\CareMobile.API.Common\CareMobile.API.Common.csproj">
+      <Project>{e63ea8da-1ff9-4e99-a683-a50737891522}</Project>
+      <Name>CareMobile.API.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\CareMobile.API.Configuration\CareMobile.API.Configuration.csproj">
+      <Project>{35f08c5f-e146-48f8-8536-a36fd08655f3}</Project>
+      <Name>CareMobile.API.Configuration</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -44,7 +44,11 @@ namespace CareMobile.Azure.EmotionAPI
 
                 if (!String.IsNullOrEmpty(responseContent))
                 {
-                    returnValue = JsonConvert.DeserializeObject<RootObject>(responseContent);
+                    var list  = JsonConvert.DeserializeObject<List<RootObject>>(responseContent);
+                    if (list != null && list.Any())
+                    {
+                        returnValue = list.FirstOrDefault();
+                    }
                 }
             }
 

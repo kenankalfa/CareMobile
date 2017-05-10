@@ -15,7 +15,9 @@ namespace CareMobile.API
         public static void ConfigureMobileApp(IAppBuilder app)
         {
             HttpConfiguration config = new HttpConfiguration();
-            
+
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+
             new MobileAppConfiguration()
                 .UseDefaultConfiguration()
                 .ApplyTo(config);

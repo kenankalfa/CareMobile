@@ -9,7 +9,6 @@
         string AzureStorageEndPoint { get; set; }
         string AzureStorageContainerName { get; set; }
         string AzureStorageContainerDirectoryName { get; set; }
-
         string AzureEmotionApiKey { get; set; }
         string AzureEmotionApiEndPoint { get; set; }
 

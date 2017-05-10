@@ -7,7 +7,6 @@ namespace CareMobile.API.Common
 {
     public class Photo
     {
-        [JsonProperty(PropertyName = "id")]
         public string PhotoRef { get; set; }
         public string FileName { get; set; }
         public string Url { get; set; }
