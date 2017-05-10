@@ -189,7 +189,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\AutofacBootsrapper.cs" />
-    <Compile Include="Utils\ConfigurationSettings.cs" />
+    <Compile Include="Utils\AzureConfigurationSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
