@@ -9,16 +9,17 @@ using CareMobile.API.Configuration;
 
 namespace CareMobile.Azure.DocumentDB
 {
-    public class EmotionApiRepository : DocumentDBRepository<EmotionApiResult>, IEmotionApiRepository
+    public class EmotionApiRepository : IEmotionApiRepository
     {
-        private IConfigurationSettings _settings;
-        public EmotionApiRepository(IConfigurationSettings settings):base(settings)
+        private IDocumentDBRepository<EmotionApiResult> _repository;
+
+        public EmotionApiRepository(IDocumentDBRepository<EmotionApiResult> repository,IConfigurationSettings settings)
         {
-            
+            _repository = repository;
         }
         public async Task Save(EmotionApiResult instance)
         {
-            await CreateItemAsync(instance);
+            await _repository.CreateItemAsync(instance);
         }
     }
 }

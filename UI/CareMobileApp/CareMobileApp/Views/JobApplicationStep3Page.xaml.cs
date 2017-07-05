@@ -26,44 +26,15 @@ namespace CareMobileApp.Views
 
         private async void FinishJobApplicationButton_Clicked(object sender, EventArgs e)
         {
-            try
+            var operationResult = await HttpServices.JobApplicationService.MakeJobApplication(_profilePhotoStreamOnDisappearing);
+
+            if (operationResult.IsSucceed)
             {
-                var currentInstance = JobApplicationPagesDataManager.Instance;
-
-                var postPhotoStream = new MemoryStream(_profilePhotoStreamOnDisappearing.ToArray());
-                postPhotoStream.Position = 0;
-
-                var httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri("http://caremobileaphostv2.azurewebsites.net/");
-
-                var instance = new JobApplication();
-
-                instance.Applicant = new Applicant();
-                instance.Applicant.BirthDate = currentInstance.BirthDate;
-                instance.Applicant.EmailAddress = currentInstance.EmailAddress;
-                instance.Applicant.FullName = currentInstance.FullName;
-                instance.Position = new Position();
-                instance.Position.PositionName = currentInstance.SelectedPosition;
-
-                var request = new HttpRequestMessage();
-                var requestContent = new MultipartFormDataContent();
-                var streamContent = new StreamContent(postPhotoStream);
-                var stringContent = new StringContent(JsonConvert.SerializeObject(instance), Encoding.UTF8, "application/json");
-
-                request.Method = HttpMethod.Post;
-
-                requestContent.Add(streamContent, "PhotoStreamInstance");
-                requestContent.Add(stringContent, "EntityInstance");
-
-                request.Content = requestContent;
-
-                var response = await httpClient.PostAsync("api/JobApplication/Post", requestContent);
-                
                 await DisplayAlert("Process Result", "Success", "Cancel");
             }
-            catch (Exception exception)
+            else
             {
-                await DisplayAlert("Save Application Error", exception.InnerException.Message, "Cancel");
+                await DisplayAlert("Save Application Error", operationResult.Messages.FirstOrDefault(), "Cancel");
             }
         }
 

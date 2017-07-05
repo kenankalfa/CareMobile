@@ -14,12 +14,15 @@ namespace CareMobile.API.Host
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+
+            AutofacBootsrapper.Run();
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            AutofacBootsrapper.Run();
+            
         }
     }
 }

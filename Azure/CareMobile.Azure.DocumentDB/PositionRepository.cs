@@ -10,16 +10,28 @@ using CareMobile.API.Common;
 
 namespace CareMobile.Azure.DocumentDB
 {
-    public class PositionRepository : DocumentDBRepository<Position>, IPositionRepository
+    public class PositionRepository : IPositionRepository
     {
-        public PositionRepository(IConfigurationSettings settings):base(settings)
-        {
+        private IDocumentDBRepository<Position> _repository;
 
+        public PositionRepository(IDocumentDBRepository<Position> repository, IConfigurationSettings settings)
+        {
+            _repository = repository;
         }
 
         public Task<IEnumerable<Position>> Get(Expression<Func<Position, bool>> predicate)
         {
-            return GetItemsAsync(predicate);
+            return _repository.GetItemsAsync(predicate);
+        }
+
+        public async Task Save(Position instance)
+        {
+            if (instance == null)
+            {
+                return;
+            }
+
+            await _repository.CreateItemAsync(instance);
         }
     }
 }

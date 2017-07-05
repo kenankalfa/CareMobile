@@ -6,12 +6,11 @@
 
     <ListView x:Name="SeparatorListView"
 			SeparatorColor="Transparent"
-			ItemsSource="{Binding Persons}"
+			ItemsSource="{Binding JobApplications}"
 			Margin="0,0,0,0"
 			RowHeight="100"
 			HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
-			BackgroundColor="White"
-			Grid.Row="1">
+			BackgroundColor="White" CachingStrategy="RecycleElement">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell IsEnabled="false">
@@ -26,19 +25,21 @@
                         </Grid.ColumnDefinitions>
 
                         <StackLayout Grid.Row="0" Grid.Column="0" Padding="0,0,0,0" VerticalOptions="Center" HorizontalOptions="Center">
-                            <circleImageControl:CircleImage Source="profile_image_fb.jpg" Aspect="AspectFill" BorderThickness="3" HorizontalOptions="Center" VerticalOptions="Center" BorderColor="White" MinimumHeightRequest="80" MinimumWidthRequest="80" WidthRequest="80" HeightRequest="80">
-                            </circleImageControl:CircleImage>
+                            <!--<circleImageControl:CircleImage Source="{Binding Photo.Url}" Aspect="AspectFill" BorderThickness="3" HorizontalOptions="Center" VerticalOptions="Center" BorderColor="White" MinimumHeightRequest="80" MinimumWidthRequest="80" WidthRequest="80" HeightRequest="80">
+                            </circleImageControl:CircleImage>-->
+
+                            <Image Source="profile_image_fb.jpg" Aspect="AspectFill" HorizontalOptions="Center" VerticalOptions="Center" MinimumHeightRequest="80" MinimumWidthRequest="80" HeightRequest="80" WidthRequest="80"></Image>
                         </StackLayout>
 
                         <StackLayout Grid.Row="0" Grid.Column="1" Padding="0,0,0,0" VerticalOptions="Center" HorizontalOptions="Start">
-                            <Label Text="{Binding FullName}"></Label>
-                            <Label Text="{Binding Profession}"></Label>
+                            <Label Text="{Binding Applicant.FullName}"></Label>
+                            <Label Text="{Binding Position.PositionName}"></Label>
                         </StackLayout>
 
                         <StackLayout Grid.Row="0" Grid.Column="2" Padding="0,0,0,0" Margin="0,0,10,0" VerticalOptions="Center" HorizontalOptions="EndAndExpand" Orientation="Horizontal">
-                            <Image Source="detail_icon.png" WidthRequest="30" HeightRequest="30"></Image>
-                            <Image Source="reject_icon.png" WidthRequest="30" HeightRequest="30"></Image>
-                            <Image Source="approve_icon.png" WidthRequest="30" HeightRequest="30"></Image>
+                            <Image Source="detail_icon.png" WidthRequest="25" HeightRequest="25"></Image>
+                            <Image Source="reject_icon.png" WidthRequest="25" HeightRequest="25"></Image>
+                            <Image Source="approve_icon.png" WidthRequest="25" HeightRequest="25"></Image>
                         </StackLayout>
                     </Grid>
                 </ViewCell>

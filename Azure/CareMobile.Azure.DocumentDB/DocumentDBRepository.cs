@@ -12,7 +12,7 @@ using CareMobile.API.Configuration;
 
 namespace CareMobile.Azure.DocumentDB
 {
-    public class DocumentDBRepository<T> where T : class
+    public class DocumentDBRepository<T> : IDocumentDBRepository<T> where T :  class
     {
         private IConfigurationSettings _settings;
 
@@ -23,57 +23,71 @@ namespace CareMobile.Azure.DocumentDB
         public DocumentDBRepository(IConfigurationSettings settings)
         {
             _settings = settings;
+            Init();
+        }
 
+        private void Init()
+        {
             DatabaseId = _settings.AzureDocumentDbDatabaseId;
             CollectionId = typeof(T).Name.ToLower() + "_collection";
 
             client = new DocumentClient(new Uri(_settings.AzureDocumentDbEndPoint), _settings.AzureDocumentDbAuthKey);
-            CreateDatabaseIfNotExistsAsync().Wait();
-            CreateCollectionIfNotExistsAsync().Wait();
+            CreateDatabaseIfNotExistsAsync();
+            CreateCollectionIfNotExistsAsync();
         }
 
-        protected async Task CreateDatabaseIfNotExistsAsync()
+        protected void CreateDatabaseIfNotExistsAsync()
         {
             try
             {
-                await client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(DatabaseId));
+                // await client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(DatabaseId));
+                client.ReadDatabaseAsync(UriFactory.CreateDatabaseUri(DatabaseId)).Wait();
             }
-            catch (DocumentClientException e)
+            catch (Exception e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                if (e.InnerException is DocumentClientException)
                 {
-                    await client.CreateDatabaseAsync(new Database { Id = DatabaseId });
+                    var innerException = e.InnerException as DocumentClientException;
+                    if (innerException.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        // await client.CreateDatabaseAsync(new Database { Id = DatabaseId });
+                        client.CreateDatabaseAsync(new Database { Id = DatabaseId }).Wait();
+                    }
                 }
-                else
-                {
-                    throw;
-                }
+                
             }
         }
 
-        protected async Task CreateCollectionIfNotExistsAsync()
+        protected void CreateCollectionIfNotExistsAsync()
         {
             try
             {
-                await client.ReadDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId));
+                // await client.ReadDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId));
+                client.ReadDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId)).Wait();
             }
-            catch (DocumentClientException e)
+            catch (Exception e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                if (e.InnerException is DocumentClientException)
                 {
-                    await client.CreateDocumentCollectionAsync(
-                        UriFactory.CreateDatabaseUri(DatabaseId),
-                        new DocumentCollection { Id = CollectionId },
-                        new RequestOptions { OfferThroughput = 1000 });
+                    var innerException = e.InnerException as DocumentClientException;
+                    if (innerException.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        //await client.CreateDocumentCollectionAsync(
+                        //    UriFactory.CreateDatabaseUri(DatabaseId),
+                        //    new DocumentCollection { Id = CollectionId },
+                        //    new RequestOptions { OfferThroughput = 1000 });
+
+                        client.CreateDocumentCollectionAsync(
+                            UriFactory.CreateDatabaseUri(DatabaseId),
+                            new DocumentCollection { Id = CollectionId },
+                            new RequestOptions { OfferThroughput = 1000 }).Wait();
+                    }
                 }
-                else
-                {
-                    throw;
-                }
+                
             }
         }
 
-        protected async Task<IEnumerable<T>> GetItemsAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> GetItemsAsync(Expression<Func<T, bool>> predicate)
         {
             IDocumentQuery<T> query = client.CreateDocumentQuery<T>(
                 UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId))
@@ -89,12 +103,12 @@ namespace CareMobile.Azure.DocumentDB
             return results;
         }
 
-        protected async Task<Document> CreateItemAsync(T item)
+        public async Task<Document> CreateItemAsync(T item)
         {
             return await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId), item);
         }
 
-        protected async Task<Document> UpdateItemAsync(string id, T item)
+        public async Task<Document> UpdateItemAsync(string id, T item)
         {
             return await client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id), item);
         }

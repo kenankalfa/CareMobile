@@ -19,9 +19,12 @@ namespace CareMobile.Console.Test
         // for testing purposes
         static void Main(string[] args)
         {
-            StreamTest().Wait();
-            // JobApplicationDocumentDbCreateTest().Wait();
-            // JobApplicationDocumentDbListTest().Wait();
+            //StreamTest().Wait();
+            //JobApplicationDocumentDbCreateTest().Wait();
+            //JobApplicationDocumentDbListTest().Wait();
+            //PositionDocumentDbCreateTest().Wait();
+            //Test().Wait();
+            PositionDocumentDbListTest().Wait();
 
             // EmotionCreate().Wait();
 
@@ -69,10 +72,12 @@ namespace CareMobile.Console.Test
 
         static async Task Test()
         {
+            var config = new ConfigurationSettings();
             var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://caremobileaphostv2.azurewebsites.net/");
-            
-            var response = await httpClient.GetStringAsync("api/JobApplication/56c383b2-ac63-4464-baf1-7e826fd47668");
+            httpClient.BaseAddress = new Uri("http://caremobileapihostv3.azurewebsites.net/");
+            httpClient.BaseAddress = new Uri("http://localhost:15199/");
+
+            var response = await httpClient.GetStringAsync("api/JobApplication/e749f671-22b6-4f83-b701-ee096ce8931c");
             System.Console.WriteLine(response);
         }
 
@@ -107,50 +112,80 @@ namespace CareMobile.Console.Test
 
         static async Task JobApplicationDocumentDbCreateTest()
         {
-            var config = new ConfigurationSettings();
-            var jobApplication = new JobApplicationRepository(config);
+            //var config = new ConfigurationSettings();
+            //var jobApplication = new JobApplicationRepository(config);
 
-            for (int i = 0; i < 5; i++)
-            {
-                var instance = new JobApplication();
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    var instance = new JobApplication();
 
-                instance.Applicant = new Applicant() { ApplicantRef = Guid.NewGuid().ToString(), CreateDate = DateTime.Now, FullName = Faker.NameFaker.FirstName(),IdentificationNumber = Faker.NumberFaker.Number().ToString() };
-                instance.CreateDate = DateTime.Now;
-                instance.ModifiedDate = Faker.DateTimeFaker.DateTime();
-                instance.Photo = new Photo() { FileName = "maxresdefault.jpg", PhotoRef = Guid.NewGuid().ToString(), Url = "https://i.ytimg.com/vi/ucZZWg3LECg/maxresdefault.jpg" };
-                instance.Position = new Position() { PositionName = Faker.StringFaker.Alpha(30), PositionRef = Guid.NewGuid().ToString() };
+            //    instance.Applicant = new Applicant() { ApplicantRef = Guid.NewGuid().ToString(), CreateDate = DateTime.Now, FullName = Faker.NameFaker.FirstName(),IdentificationNumber = Faker.NumberFaker.Number().ToString() };
+            //    instance.CreateDate = DateTime.Now;
+            //    instance.ModifiedDate = Faker.DateTimeFaker.DateTime();
+            //    instance.Photo = new Photo() { FileName = "ronaldo.jpg", PhotoRef = Guid.NewGuid().ToString(), Url = "http://assets.hookit.com/RFS/2017/02/16/a4469d70-0cad-4030-82d3-5530e10bfea4.jpg?size=200&crop=true" };
+            //    instance.Position = new Position() { PositionName = Faker.StringFaker.Alpha(30), PositionRef = Guid.NewGuid().ToString() };
 
-                await jobApplication.Save(instance);
-            }
+            //    await jobApplication.Save(instance);
+            //}
         }
 
         static async Task JobApplicationDocumentDbListTest()
         {
-            var config = new ConfigurationSettings();
-            var jobApplication = new JobApplicationRepository(config);
+            //var config = new ConfigurationSettings();
+            //var jobApplication = new JobApplicationRepository(config);
 
-            var getResult = await jobApplication.Get(q => q.IsApprovedForHarmony == null);
-            System.Console.WriteLine("liste");
-            foreach (var item in getResult)
-            {
-                System.Console.WriteLine(item.JobApplicationRef + " " + item.Applicant.FullName);
-            }
+            //var getResult = await jobApplication.Get(q => q.IsApprovedForHarmony == true);
+            //System.Console.WriteLine("liste");
+            //foreach (var item in getResult)
+            //{
+            //    System.Console.WriteLine(item.JobApplicationRef + " " + item.Applicant.FullName);
+            //}
         }
 
         static async Task EmotionCreate()
         {
             var config = new ConfigurationSettings();
-            var jobApplication = new EmotionApiRepository(config);
+            //var jobApplication = new EmotionApiRepository(config);
 
-            for (int i = 0; i < 5; i++)
-            {
-                var instance = new EmotionApiResult();
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    var instance = new EmotionApiResult();
 
-                instance.JobApplicantRef = Guid.NewGuid().ToString();
-                instance.EmotionApi = new RootObject();
+            //    instance.JobApplicantRef = Guid.NewGuid().ToString();
+            //    instance.EmotionApi = new RootObject();
 
-                await jobApplication.Save(instance);
-            }
+            //    await jobApplication.Save(instance);
+            //}
+        }
+
+        static async Task PositionDocumentDbCreateTest()
+        {
+            //var config = new ConfigurationSettings();
+            //var jobApplication = new PositionRepository(config);
+
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    var instance = new Position();
+
+            //    instance.IsDeleted = false;
+            //    instance.PositionName = "Pozisyon " + (i+1);
+            //    instance.PositionRef = Guid.NewGuid().ToString();
+                
+            //    await jobApplication.Save(instance);
+            //}
+        }
+
+        static async Task PositionDocumentDbListTest()
+        {
+            //var config = new ConfigurationSettings();
+            //var position = new PositionRepository(config);
+
+            //var getResult = await position.Get(q => q.IsDeleted == false && q.PositionRef == "0ac35922-1939-4672-bc65-85ee084c70f0");
+            //System.Console.WriteLine("liste");
+            //foreach (var item in getResult)
+            //{
+            //    System.Console.WriteLine(item.PositionRef + " " + item.PositionName);
+            //}
         }
     }
 }

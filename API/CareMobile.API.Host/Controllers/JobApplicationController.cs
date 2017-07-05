@@ -29,7 +29,6 @@ namespace CareMobile.API.Host.Controllers
             _emotionRepository = emotionRepository;
             _emotionApiRepository = emotionApiRepository;
         }
-        [System.Web.Http.AcceptVerbs("GET")]
         public async Task<ServiceResult<IEnumerable<JobApplication>>> Get(bool? isApprovedForHarmony)
         {
             var returnValue = new ServiceResult<IEnumerable<JobApplication>>();
@@ -37,8 +36,7 @@ namespace CareMobile.API.Host.Controllers
             returnValue.Result = await _jobApplicationRepository.Get(q => q.IsApprovedForHarmony == isApprovedForHarmony);
             return returnValue;
         }
-
-        [System.Web.Http.AcceptVerbs("GET")]
+        
         public async Task<ServiceResult<JobApplication>> Get(string id)
         {
             var returnValue = new ServiceResult<JobApplication>();
@@ -48,7 +46,6 @@ namespace CareMobile.API.Host.Controllers
             return returnValue;
         }
 
-        [System.Web.Http.AcceptVerbs("POST")]
         public async Task<ServiceResult<bool>> Post()
         {
             var returnValue = new ServiceResult<bool>();
@@ -123,7 +120,6 @@ namespace CareMobile.API.Host.Controllers
             return returnValue;
         }
 
-        [System.Web.Http.AcceptVerbs("PUT")]
         public async Task<ServiceResult<bool>> Put(string id, [FromBody]bool isApproved)
         {
             var result = await _jobApplicationRepository.Get(q => q.JobApplicationRef == id);

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
 using CareMobile.API.Configuration;
+using CareMobile.API.Host.Controllers;
 using CareMobile.Azure.DocumentDB;
 using CareMobile.Azure.EmotionAPI;
 using CareMobile.Azure.Storage;
@@ -16,19 +17,21 @@ namespace CareMobile.API.Host
             var config = GlobalConfiguration.Configuration;
 
             var builder = new ContainerBuilder();
-            
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterType<ConfigurationSettings>().As<IConfigurationSettings>().SingleInstance();
+            var assembly = Assembly.GetExecutingAssembly();
 
-            builder.RegisterGeneric(typeof(DocumentDBRepository<>));
+            builder.RegisterApiControllers(assembly);
+
+            builder.RegisterType<ConfigurationSettings>().As<IConfigurationSettings>().InstancePerDependency();
+
+            builder.RegisterGeneric(typeof(DocumentDBRepository<>)).As(typeof(IDocumentDBRepository<>)).InstancePerDependency().SingleInstance();
             builder.RegisterType<JobApplicationRepository>().As<IJobApplicationRepository>();
             builder.RegisterType<PositionRepository>().As<IPositionRepository>();
             builder.RegisterType<EmotionApiRepository>().As<IEmotionApiRepository>();
 
             builder.RegisterType<EmotionRepository>().As<IEmotionRepository>();
             builder.RegisterType<StorageRepository>().As<IStorageRepository>();
-            
+
             var container = builder.Build();
 
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

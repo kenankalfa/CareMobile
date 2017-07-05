@@ -2,6 +2,9 @@
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace CareMobileApp.Views
 {
@@ -19,16 +22,35 @@ namespace CareMobileApp.Views
             }
         }
 
+        private ObservableCollection<JobApplication> _jobApplications;
+        public ObservableCollection<JobApplication> JobApplications
+        {
+            get { return _jobApplications; }
+            set
+            {
+                _jobApplications = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public ManagerPage()
         {
             InitializeComponent();
-            BindingContext = this;
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
+            BindingContext = this;
             base.OnAppearing();
-            Persons = new ObservableCollection<SamplePersonType>(SampleDataService.GetPersonForManagerView());
+            var result = await HttpServices.JobApplicationService.GetApproveList();
+            JobApplications = new ObservableCollection<JobApplication>(result);
+        }
+
+        protected override void OnDisappearing()
+        {
+            BindingContext = null;
+            base.OnDisappearing();
         }
     }
 }

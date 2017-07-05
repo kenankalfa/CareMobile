@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace CareMobileApp.Utils
@@ -59,6 +63,7 @@ namespace CareMobileApp.Utils
     public static class Const
     {
         public const string JobApplicationPagesData = "JobApplicationPagesData";
+        public const string APIUrl = "http://caremobileaphostv2.azurewebsites.net/";
     }
 
     public class JobApplicationPagesData
@@ -134,7 +139,85 @@ namespace CareMobileApp.Utils
     {
         public static class PositionService
         {
-           
+            public static async Task<IEnumerable<Position>> GetPositions()
+            {
+                var httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri(Const.APIUrl);
+
+                var getResult = await httpClient.GetAsync("api/Position");
+                var getResultContent = await getResult.Content.ReadAsStringAsync();
+                var resultObject = JsonConvert.DeserializeObject<ServiceResult<IEnumerable<Position>>>(getResultContent);
+
+                return resultObject.Result;
+            }
+        }
+        public static class JobApplicationService
+        {
+            public static async Task<IEnumerable<JobApplication>> GetApproveList()
+            {
+                var httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri(Const.APIUrl);
+
+                var getResult = await httpClient.GetAsync("api/JobApplication?isApprovedForHarmony=");
+                var getResultContent = await getResult.Content.ReadAsStringAsync();
+                var resultObject = JsonConvert.DeserializeObject<ServiceResult<IEnumerable<JobApplication>>>(getResultContent);
+                
+                return resultObject.Result;
+            }
+            public static async Task<ServiceResult<bool>> MakeJobApplication(MemoryStream profilePhotoStreamOnDisappearing)
+            {
+                var returnValue = default(Task<ServiceResult<bool>>);
+
+                try
+                {
+                    var currentInstance = JobApplicationPagesDataManager.Instance;
+
+                    var postPhotoStream = new MemoryStream(profilePhotoStreamOnDisappearing.ToArray());
+                    postPhotoStream.Position = 0;
+
+                    var httpClient = new HttpClient();
+                    httpClient.BaseAddress = new Uri(Const.APIUrl);
+
+                    var instance = new JobApplication();
+
+                    instance.Applicant = new Applicant();
+                    instance.Applicant.BirthDate = currentInstance.BirthDate;
+                    instance.Applicant.EmailAddress = currentInstance.EmailAddress;
+                    instance.Applicant.FullName = currentInstance.FullName;
+                    instance.Position = new Position();
+                    instance.Position.PositionName = currentInstance.SelectedPosition;
+
+                    var request = new HttpRequestMessage();
+                    var requestContent = new MultipartFormDataContent();
+                    var streamContent = new StreamContent(postPhotoStream);
+                    var stringContent = new StringContent(JsonConvert.SerializeObject(instance), Encoding.UTF8, "application/json");
+
+                    request.Method = HttpMethod.Post;
+
+                    requestContent.Add(streamContent, "PhotoStreamInstance");
+                    requestContent.Add(stringContent, "EntityInstance");
+
+                    request.Content = requestContent;
+
+                    var response = await httpClient.PostAsync("api/JobApplication/Post", requestContent);
+                    var contentString = await response.Content.ReadAsStringAsync();
+
+                    var resultObject = JsonConvert.DeserializeObject<ServiceResult<bool>>(contentString);
+                    returnValue = Task.FromResult<ServiceResult<bool>>(resultObject);
+                }
+                catch (Exception ex)
+                {
+                    var exception = new ServiceResult<bool>();
+                    exception.Messages = new string[] { ex.Message };
+
+                    if (returnValue == default(Task<ServiceResult<bool>>))
+                    {
+                        returnValue = Task.FromResult<ServiceResult<bool>>(exception);
+                    }
+                }
+
+                return await returnValue;
+            }
         }
     }
 }

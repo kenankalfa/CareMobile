@@ -10,16 +10,18 @@ using CareMobile.API.Configuration;
 
 namespace CareMobile.Azure.DocumentDB
 {
-    public class JobApplicationRepository : DocumentDBRepository<JobApplication> , IJobApplicationRepository
+    public class JobApplicationRepository : IJobApplicationRepository
     {
-        public JobApplicationRepository(IConfigurationSettings settings):base(settings)
+        private IDocumentDBRepository<JobApplication> _repository;
+
+        public JobApplicationRepository(IDocumentDBRepository<JobApplication> repository, IConfigurationSettings settings)
         {
-            
+            _repository = repository;
         }
 
         public Task<IEnumerable<JobApplication>> Get(Expression<Func<JobApplication, bool>> predicate)
         {
-            return GetItemsAsync(predicate);
+            return _repository.GetItemsAsync(predicate);
         }
 
         public async Task Save(JobApplication instance)
@@ -32,11 +34,11 @@ namespace CareMobile.Azure.DocumentDB
             if (String.IsNullOrEmpty(instance.JobApplicationRef))
             {
                 instance.JobApplicationRef = Guid.NewGuid().ToString();
-                await CreateItemAsync(instance);
+                await _repository.CreateItemAsync(instance);
             }
             else
             {
-                await UpdateItemAsync(instance.JobApplicationRef, instance);
+                await _repository.UpdateItemAsync(instance.JobApplicationRef, instance);
             }
         }
     }

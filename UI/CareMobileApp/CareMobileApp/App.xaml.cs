@@ -13,7 +13,7 @@ namespace CareMobileApp
         {
             InitializeComponent();
             
-            MainPage = new NavigationPage(new Views.LoginPage());
+            MainPage = new NavigationPage(new Views.ManagerPage());
         }
 
         protected override void OnStart()

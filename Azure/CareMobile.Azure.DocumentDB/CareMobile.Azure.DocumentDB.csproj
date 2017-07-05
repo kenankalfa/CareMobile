@@ -50,10 +50,14 @@
   <ItemGroup>
     <Compile Include="DocumentDBRepository.cs" />
     <Compile Include="EmotionApiRepository.cs" />
+    <Compile Include="IDocumentDBRepository.cs" />
     <Compile Include="IEmotionApiRepository.cs" />
     <Compile Include="IJobApplicationRepository.cs" />
+    <Compile Include="ILoginRepository.cs" />
+    <Compile Include="ITokenRepository.cs" />
     <Compile Include="IPositionRepository.cs" />
     <Compile Include="JobApplicationRepository.cs" />
+    <Compile Include="LoginRepository.cs" />
     <Compile Include="PositionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

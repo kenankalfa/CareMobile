@@ -44,6 +44,8 @@ namespace CareMobileApp.Views
                 BirthDatePicker.Date = FormData.BirthDate;
                 PositionPicker.SelectedItem = FormData.SelectedPosition;
             }
+
+            BindPositionPicker();
         }
 
         private async void NextStepButton_Clicked(object sender, EventArgs e)
@@ -67,6 +69,15 @@ namespace CareMobileApp.Views
             catch (Exception ex)
             {
                 await DisplayAlert("step 2 next hata", ex.ToString(), "iptal");
+            }
+        }
+
+        private async void BindPositionPicker()
+        {
+            var result = await HttpServices.PositionService.GetPositions();
+            foreach (var position in result)
+            {
+                PositionPicker.Items.Add(position.PositionName);
             }
         }
     }

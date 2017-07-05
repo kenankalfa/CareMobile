@@ -57,6 +57,7 @@
     <Compile Include="Utils\Photo.cs" />
     <Compile Include="Utils\Position.cs" />
     <Compile Include="Utils\ServiceResult.cs" />
+    <Compile Include="Utils\User.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Views\JobApplicationStep1Page.xaml.cs">
       <DependentUpon>JobApplicationStep1Page.xaml</DependentUpon>
@@ -123,6 +124,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
