@@ -62,13 +62,6 @@
                     <Label.TextColor>Navy</Label.TextColor>
                 </Label>
                 <Picker Title="Select a Position" x:Name="PositionPicker">
-                    <Picker.Items>
-                        <x:String>Position 1</x:String>
-                        <x:String>Position 2</x:String>
-                        <x:String>Position 3</x:String>
-                        <x:String>Position 4</x:String>
-                        <x:String>Position 5</x:String>
-                    </Picker.Items>
                 </Picker>
             </StackLayout>
 

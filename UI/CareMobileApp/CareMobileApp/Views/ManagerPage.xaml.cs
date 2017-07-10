@@ -5,23 +5,15 @@ using Xamarin.Forms.Xaml;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using System.Threading.Tasks;
+using System.Runtime.ExceptionServices;
+using System;
 
 namespace CareMobileApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ManagerPage : ContentPage
     {
-        private ObservableCollection<SamplePersonType> _persons;
-        public ObservableCollection<SamplePersonType> Persons
-        {
-            get { return _persons; }
-            set
-            {
-                _persons = value;
-                OnPropertyChanged();
-            }
-        }
-
         private ObservableCollection<JobApplication> _jobApplications;
         public ObservableCollection<JobApplication> JobApplications
         {
@@ -32,8 +24,7 @@ namespace CareMobileApp.Views
                 OnPropertyChanged();
             }
         }
-
-
+        
         public ManagerPage()
         {
             InitializeComponent();
@@ -41,10 +32,12 @@ namespace CareMobileApp.Views
 
         protected async override void OnAppearing()
         {
-            BindingContext = this;
-            base.OnAppearing();
             var result = await HttpServices.JobApplicationService.GetApproveList();
             JobApplications = new ObservableCollection<JobApplication>(result);
+            SeparatorListView.ItemsSource = JobApplications;
+
+            BindingContext = this;
+            base.OnAppearing();
         }
 
         protected override void OnDisappearing()

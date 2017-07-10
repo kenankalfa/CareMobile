@@ -8,36 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace CareMobileApp.Utils
-{
-    public class SamplePersonType
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Profession { get; set; }
-
-        public string FullName => $"{FirstName} {LastName}";
-    }
-
-    // for testing purposes
-    public static class SampleDataService
-    {
-        private static List<SamplePersonType> _persons;
-
-        static SampleDataService()
-        {
-            _persons = new List<SamplePersonType>();
-
-            _persons.Add(new SamplePersonType() { FirstName = "Glenn", LastName = "Versweyveld", Profession = "Mobile developer" });
-            _persons.Add(new SamplePersonType() { FirstName = "Bart", LastName = "Lannoeye", Profession = ".Net architect" });
-            _persons.Add(new SamplePersonType() { FirstName = "Jan", LastName = "Van de Poel", Profession = "Entrepreneur" });
-        }
-
-        public static List<SamplePersonType> GetPersonForManagerView()
-        {
-            return _persons;
-        }
-    }
-
+{   
     public static class NavigationMessage
     {
         public static void PutData<T>(string key, T value)
@@ -63,7 +34,7 @@ namespace CareMobileApp.Utils
     public static class Const
     {
         public const string JobApplicationPagesData = "JobApplicationPagesData";
-        public const string APIUrl = "http://caremobileaphostv2.azurewebsites.net/";
+        public const string APIUrl = "http://caremobileapihostv3.azurewebsites.net";
     }
 
     public class JobApplicationPagesData

@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using ImageCircle.Forms.Plugin.Droid;
+using FFImageLoading.Forms.Droid;
 
 namespace CareMobileApp.Droid
 {
@@ -21,6 +22,7 @@ namespace CareMobileApp.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+            CachedImageRenderer.Init();
             ImageCircleRenderer.Init();
             LoadApplication(new App());
         }
