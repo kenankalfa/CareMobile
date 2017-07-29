@@ -27,7 +27,7 @@
                 <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
                 <Label.TextColor>Navy</Label.TextColor>
             </Label>
-            <Entry x:Name="UserNameEntry">
+            <Entry x:Name="UserNameEntry" Text="a">
                 <Entry.TextColor>Navy</Entry.TextColor>
             </Entry>
         </StackLayout>
@@ -38,7 +38,7 @@
                 <Label.VerticalTextAlignment>Center</Label.VerticalTextAlignment>
                 <Label.TextColor>Navy</Label.TextColor>
             </Label>
-            <Entry x:Name="UserPasswordEntry" IsPassword="True">
+            <Entry x:Name="UserPasswordEntry" IsPassword="True" Text="s">
                 <Entry.TextColor>Navy</Entry.TextColor>
             </Entry>
         </StackLayout>

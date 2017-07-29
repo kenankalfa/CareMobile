@@ -8,23 +8,14 @@ using System.Collections;
 using System.Threading.Tasks;
 using System.Runtime.ExceptionServices;
 using System;
+using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace CareMobileApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ManagerPage : ContentPage
     {
-        private ObservableCollection<JobApplication> _jobApplications;
-        public ObservableCollection<JobApplication> JobApplications
-        {
-            get { return _jobApplications; }
-            set
-            {
-                _jobApplications = value;
-                OnPropertyChanged();
-            }
-        }
-        
         public ManagerPage()
         {
             InitializeComponent();
@@ -32,18 +23,19 @@ namespace CareMobileApp.Views
 
         protected async override void OnAppearing()
         {
-            var result = await HttpServices.JobApplicationService.GetApproveList();
-            JobApplications = new ObservableCollection<JobApplication>(result);
-            SeparatorListView.ItemsSource = JobApplications;
-
-            BindingContext = this;
+            await UITaskFactory.StartNew(GetManagerViewList);
             base.OnAppearing();
         }
+        
 
-        protected override void OnDisappearing()
+        private async void GetManagerViewList()
         {
-            BindingContext = null;
-            base.OnDisappearing();
+            var result = await HttpServices.JobApplicationService.GetApproveList();
+            
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                SeparatorListView.ItemsSource = new ObservableCollection<JobApplication>(result.OrderByDescending(q => q.CreateDate));
+            });
         }
     }
 }

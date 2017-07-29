@@ -86,9 +86,11 @@ namespace CareMobileApp.Views
             var fileNameGuid = Guid.NewGuid().ToString();
             var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
-                Directory = "Sample",
+                Directory = "caremobile",
                 Name = $"{fileNameGuid}.jpg",
-                DefaultCamera = CameraDevice.Front
+                DefaultCamera = CameraDevice.Front,
+                CompressionQuality = 70,
+                PhotoSize = PhotoSize.Small
             });
 
             if (file == null)

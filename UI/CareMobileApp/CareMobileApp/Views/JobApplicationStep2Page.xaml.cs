@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using CareMobileApp.Utils;
 
 namespace CareMobileApp.Views
 {
@@ -33,7 +34,7 @@ namespace CareMobileApp.Views
             return true;
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
 
@@ -45,7 +46,7 @@ namespace CareMobileApp.Views
                 PositionPicker.SelectedItem = FormData.SelectedPosition;
             }
 
-            BindPositionPicker();
+            await UITaskFactory.StartNew(BindPositionPicker);
         }
 
         private async void NextStepButton_Clicked(object sender, EventArgs e)
@@ -57,7 +58,7 @@ namespace CareMobileApp.Views
                 formData.FullName = FullNameEntry.Text;
                 formData.EmailAddress = EmailEntry.Text;
                 formData.BirthDate = BirthDatePicker.Date;
-                formData.SelectedPosition = PositionPicker.SelectedItem.ToString();
+                formData.SelectedPosition = (PositionPicker.SelectedItem as Position).PositionName;
 
                 FormData = formData;
 
@@ -74,11 +75,18 @@ namespace CareMobileApp.Views
 
         private async void BindPositionPicker()
         {
-            var result = await HttpServices.PositionService.GetPositions();
-            foreach (var position in result)
+            if (PositionPicker.Items.Count > 0)
             {
-                PositionPicker.Items.Add(position.PositionName);
+                return;
             }
+
+            var result = await HttpServices.PositionService.GetPositions();
+            
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                PositionPicker.ItemsSource = result.ToList();
+                PositionPicker.ItemDisplayBinding = new Binding("PositionName");
+            });
         }
     }
 }

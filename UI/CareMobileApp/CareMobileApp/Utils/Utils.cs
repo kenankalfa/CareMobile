@@ -4,30 +4,38 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace CareMobileApp.Utils
-{   
+{
     public static class NavigationMessage
     {
+        private static object lockObject = new object();
         public static void PutData<T>(string key, T value)
         {
-            Application.Current.Properties[key] = value;
+            lock (lockObject)
+            {
+                Application.Current.Properties[key] = value;
+            }
         }
 
         public static T GetData<T>(string key)
         {
-            T value = default(T);
-
-            IDictionary<string, object> iDictionary = Application.Current.Properties;
-
-            if (iDictionary.ContainsKey(key))
+            lock (lockObject)
             {
-                value = (T)iDictionary[key];
-            }
+                T value = default(T);
 
-            return value;
+                IDictionary<string, object> iDictionary = Application.Current.Properties;
+
+                if (iDictionary.ContainsKey(key))
+                {
+                    value = (T)iDictionary[key];
+                }
+
+                return value;
+            }
         }
     }
 
@@ -77,6 +85,7 @@ namespace CareMobileApp.Utils
         {
             get
             {
+
                 var instance = NavigationMessage.GetData<JobApplicationPagesData>(Const.JobApplicationPagesData);
                 if (instance == null)
                 {
@@ -127,12 +136,14 @@ namespace CareMobileApp.Utils
             public static async Task<IEnumerable<JobApplication>> GetApproveList()
             {
                 var httpClient = new HttpClient();
+
                 httpClient.BaseAddress = new Uri(Const.APIUrl);
+                httpClient.Timeout = TimeSpan.FromMinutes(3);
 
                 var getResult = await httpClient.GetAsync("api/JobApplication?isApprovedForHarmony=");
                 var getResultContent = await getResult.Content.ReadAsStringAsync();
                 var resultObject = JsonConvert.DeserializeObject<ServiceResult<IEnumerable<JobApplication>>>(getResultContent);
-                
+
                 return resultObject.Result;
             }
             public static async Task<ServiceResult<bool>> MakeJobApplication(MemoryStream profilePhotoStreamOnDisappearing)
@@ -147,6 +158,7 @@ namespace CareMobileApp.Utils
                     postPhotoStream.Position = 0;
 
                     var httpClient = new HttpClient();
+                    httpClient.Timeout = TimeSpan.FromMinutes(1);
                     httpClient.BaseAddress = new Uri(Const.APIUrl);
 
                     var instance = new JobApplication();
@@ -189,6 +201,25 @@ namespace CareMobileApp.Utils
 
                 return await returnValue;
             }
+        }
+    }
+
+    public static class UITaskFactory
+    {
+        public async static Task<int> StartNew(Action action)
+        {
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            await Task.Factory.StartNew(
+                (object state)
+                =>
+                    {
+                        action();
+                    },
+                    TaskCreationOptions.LongRunning,
+                    cancellationTokenSource.Token);
+
+            return 1;
         }
     }
 }

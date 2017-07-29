@@ -7,7 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using ImageCircle.Forms.Plugin.Droid;
-using FFImageLoading.Forms.Droid;
+//using FFImageLoading.Forms.Droid;
 
 namespace CareMobileApp.Droid
 {
@@ -20,10 +20,9 @@ namespace CareMobileApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-
-            global::Xamarin.Forms.Forms.Init(this, bundle);
-            CachedImageRenderer.Init();
+            // CachedImageRenderer.Init();
             ImageCircleRenderer.Init();
+            global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
         }
     }

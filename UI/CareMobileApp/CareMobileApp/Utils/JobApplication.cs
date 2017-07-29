@@ -15,5 +15,10 @@ namespace CareMobileApp
         public DateTime CreateDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public bool? IsApprovedForHarmony { get; set; }
+
+        public override string ToString()
+        {
+            return this.Photo.Url;
+        }
     }
 }

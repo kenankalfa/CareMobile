@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using CareMobileApp.Utils;
 
 namespace CareMobileApp.Views
 {
@@ -26,16 +27,7 @@ namespace CareMobileApp.Views
 
         private async void FinishJobApplicationButton_Clicked(object sender, EventArgs e)
         {
-            var operationResult = await HttpServices.JobApplicationService.MakeJobApplication(_profilePhotoStreamOnDisappearing);
-
-            if (operationResult.IsSucceed)
-            {
-                await DisplayAlert("Process Result", "Success", "Cancel");
-            }
-            else
-            {
-                await DisplayAlert("Save Application Error", operationResult.Messages.FirstOrDefault(), "Cancel");
-            }
+            await UITaskFactory.StartNew(MakeJobApplication);
         }
 
         private async void PreviousStepButton_Clicked(object sender, EventArgs e)
@@ -90,6 +82,26 @@ namespace CareMobileApp.Views
             EmailLabel.Text = currentInstance.EmailAddress;
             BirthDateLabel.Text = currentInstance.BirthDate.ToString("dd.MM.yyyy");
             PositionLabel.Text = currentInstance.SelectedPosition;
+        }
+        private async void MakeJobApplication()
+        {
+            var operationResult = await HttpServices.JobApplicationService.MakeJobApplication(_profilePhotoStreamOnDisappearing);
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                JobApplicationPagesDataManager.Clear();
+
+                if (operationResult.IsSucceed)
+                {
+                    DisplayAlert("Process Result", "Success", "OK");
+                    var masterDetailMainPage = new MasterPageViews.MasterMainPage();
+                    Navigation.PushAsync(masterDetailMainPage);
+                }
+                else
+                {
+                    DisplayAlert("Save Application Error", operationResult.Messages.FirstOrDefault(), "OK");
+                }
+            });
         }
     }
 }
